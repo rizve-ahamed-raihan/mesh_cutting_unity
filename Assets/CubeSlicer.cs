@@ -8,7 +8,10 @@ public class CubeSlicer : MonoBehaviour
 
     public void Slice(Vector3 planePoint, Vector3 planeNormal)
     {
-        Plane plane = new Plane(planeNormal, planePoint);
+        // Convert world-space plane to local space
+        Vector3 localPlaneNormal = transform.InverseTransformDirection(planeNormal);
+        Vector3 localPlanePoint = transform.InverseTransformPoint(planePoint);
+        Plane plane = new Plane(localPlaneNormal, localPlanePoint);
 
         Mesh mesh = GetComponent<MeshFilter>().mesh;
         Vector3[] verts = mesh.vertices;
@@ -30,9 +33,10 @@ public class CubeSlicer : MonoBehaviour
             Vector3 vb = verts[b];
             Vector3 vc = verts[c];
 
-            bool sa = plane.GetSide(transform.TransformPoint(va));
-            bool sb = plane.GetSide(transform.TransformPoint(vb));
-            bool sc = plane.GetSide(transform.TransformPoint(vc));
+            // Use local-space vertices directly with local-space plane
+            bool sa = plane.GetSide(va);
+            bool sb = plane.GetSide(vb);
+            bool sc = plane.GetSide(vc);
 
             int sideCount = (sa ? 1 : 0) + (sb ? 1 : 0) + (sc ? 1 : 0);
 
@@ -109,9 +113,14 @@ public class CubeSlicer : MonoBehaviour
 
     Vector3 Intersect(Plane p, Vector3 a, Vector3 b)
     {
-        Ray r = new Ray(transform.TransformPoint(a), transform.TransformPoint(b - a));
-        p.Raycast(r, out float enter);
-        return transform.InverseTransformPoint(r.GetPoint(enter));
+        // Plane intersection in local space
+        Vector3 direction = b - a;
+        float denominator = Vector3.Dot(p.normal, direction);
+        if (Mathf.Abs(denominator) < 0.0001f)
+            return (a + b) * 0.5f; // Parallel, return midpoint
+        
+        float t = (Vector3.Dot(p.normal, p.normal * -p.distance) - Vector3.Dot(p.normal, a)) / denominator;
+        return a + direction * t;
     }
 
     void CreatePiece(List<Vector3> v, List<int> t, List<Vector3> cap, Vector3 normal)
@@ -119,6 +128,7 @@ public class CubeSlicer : MonoBehaviour
         GameObject go = new GameObject("Slice");
         go.transform.position = transform.position;
         go.transform.rotation = transform.rotation;
+        go.transform.localScale = Vector3.one;
 
         Mesh m = new Mesh();
         m.vertices = v.ToArray();

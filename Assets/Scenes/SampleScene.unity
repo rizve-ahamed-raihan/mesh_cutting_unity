@@ -551,6 +551,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4104712718936833609, guid: 8b591bdd358baf046be06eb414e113ae, type: 3}
+--- !u!114 &105112382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105112375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f6563f51ab447eb38453479f395871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::jadestone_met_rogh.MoveAtDirection
+  direction: {x: 0.98, y: 1, z: 0}
+  speed: 0
 --- !u!1 &131185885 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -245459299271173056, guid: 8b591bdd358baf046be06eb414e113ae, type: 3}
@@ -5746,7 +5760,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -5849,7 +5863,7 @@ Transform:
   m_GameObject: {fileID: 1227552631}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.452, y: 1.212, z: -6.028}
+  m_LocalPosition: {x: -1.007, y: 1.212, z: -5.888}
   m_LocalScale: {x: 0.4739, y: 0.19889, z: 0.15133}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8350,6 +8364,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5992824952519352136, guid: 8b591bdd358baf046be06eb414e113ae, type: 3}
       insertIndex: -1
       addedObject: {fileID: 105112381}
+    - targetCorrespondingSourceObject: {fileID: -5992824952519352136, guid: 8b591bdd358baf046be06eb414e113ae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 105112382}
     - targetCorrespondingSourceObject: {fileID: -8780849450213643799, guid: 8b591bdd358baf046be06eb414e113ae, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1009617697}
